@@ -18,6 +18,12 @@
         </app-primary-button>
     </div>
 
+    <div class="md:hidden">
+         <button class="w-full text-sm  bg-black text-white px-4 py-2 rounded-xl hover:shadow-lg transition">
+        Sell your ticket
+    </button>
+    </div>
+
     <!-- Mobile Menu Toggle -->
     <div class="md:hidden">
         <button (click)="toggleMobileMenu()">
@@ -34,8 +40,4 @@
     @for(link of navigationLinks(); track link.id){
     <a [routerLink]="[link.path]" class="block py-2 text-gray-700 hover:text-black hover:text-lg ">{{link.name}}</a>
     }
-
-    <button class="w-full mt-2 bg-black text-white px-4 py-2 rounded-xl hover:shadow-lg transition">
-        Sell your ticket
-    </button>
 </div>

@@ -1,0 +1,8 @@
+
+
+
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5">
+@for(ticket of events | async; track ticket.id) {
+  <app-ticket-card [event]="ticket"></app-ticket-card>
+}
+</div>

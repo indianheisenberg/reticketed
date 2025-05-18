@@ -1,9 +1,9 @@
 export enum EventType {
   Concert = 'Concert',
-  Conference = 'Conference',
-  Sports = 'Sports',
-  Theater = 'Theater',
-  Festival = 'Festival',
+  ComedyShow = 'Comedy Show',
+  Cricket = 'Cricket',
+  Football = 'Football',
+  FoodFestival = 'Food Festival',
   Workshop = 'Workshop',
   Webinar = 'Webinar',
   Other = 'Other',

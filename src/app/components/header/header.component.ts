@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { PrimaryButtonComponent } from '../common/primary-button/primary-button.component';
 
 @Component({
@@ -13,7 +13,8 @@ export class HeaderComponent {
   title = signal('Reticketed');
   subtitle = signal('resell your tickets effortlessly');
   logoUrl = signal('assets/logo.png');
-  
+  router = inject(Router);
+
   navigationLinks = signal([
    
     { id: 1 , name: 'Movie Tickets', path: '/movies' },
@@ -22,7 +23,7 @@ export class HeaderComponent {
 
   ]);
 
-   mobileMenuOpen = false;
+  mobileMenuOpen = false;
 
   toggleMobileMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
@@ -31,5 +32,6 @@ export class HeaderComponent {
   onSellTicketClick() {
     // Logic to handle the sell ticket button click
     console.log('Sell Ticket button clicked');
+    this.router.navigateByUrl('sell-ticket');
   }
 }

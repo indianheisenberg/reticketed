@@ -40,3 +40,14 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Firebase cache and config
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+.firebaserc
+.firebase/
+.firebase-cache/
+functions/node_modules/
+functions/lib/
+functions/.firebase/

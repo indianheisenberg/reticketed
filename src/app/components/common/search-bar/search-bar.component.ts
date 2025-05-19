@@ -1,22 +1,34 @@
-import { Component, input, output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-search-bar',
-  imports: [],
   templateUrl: './search-bar.component.html',
-  styleUrl: './search-bar.component.scss'
+  styleUrls: ['./search-bar.component.scss'],
 })
 export class SearchBarComponent {
+  @Input() placeholderText = 'Search for tickets...';
+  @Input() class = '';
 
-  placeholderText = input('Search for tickets...');
-  class = input('');
+  private _value = signal('');
 
-  searchButtonClicked = output();
-
-  onSearch() {
-    this.searchButtonClicked.emit();
-    // Logic to handle the search action
-    console.log('Search action triggered');
+  @Input()
+  set value(val: string | null | undefined) {
+    this._value.set(val ?? '');
   }
 
+  get value(): string {
+    return this._value();
+  }
+
+  @Output() searchButtonClicked = new EventEmitter<string>();
+
+  onSearch() {
+    this.searchButtonClicked.emit(this.value);
+  }
+
+  // Optional: expose a method to update value from input event
+  onInputChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this._value.set(input.value);
+  }
 }

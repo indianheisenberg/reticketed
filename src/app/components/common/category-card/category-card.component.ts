@@ -1,4 +1,4 @@
-import { Component, input, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { EventTypeIcons } from '../../../enums/event-type-icons';
 import { EventType } from '../../../enums/event-type.enum';
 
@@ -6,10 +6,9 @@ import { EventType } from '../../../enums/event-type.enum';
   selector: 'app-category-card',
   imports: [],
   templateUrl: './category-card.component.html',
-  styleUrls: ['./category-card.component.scss']
+  styleUrls: ['./category-card.component.scss'],
 })
 export class CategoryCardComponent {
-
   @Input() category!: EventType;
   readonly iconsMap = EventTypeIcons;
 

@@ -1,25 +1,42 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import {
+  addDoc,
+  collection,
+  collectionData,
+  doc,
+  Firestore,
+  limit,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from '@angular/fire/firestore';
 import { map, Observable } from 'rxjs';
 import { Ticket } from '../models/ticket.model';
-import { addDoc, collection, collectionData, doc, Firestore, setDoc } from '@angular/fire/firestore';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TicketServiceService {
-
   private http = inject(HttpClient);
   private jsonUrl = 'assets/events.json';
 
-   private firestore = inject(Firestore); // Modern inject usage
+  private firestore = inject(Firestore); // Modern inject usage
 
   getRecentTickets(numberOfTickets: number): Observable<Ticket[]> {
+    // return this.http.get<Ticket[]>(this.jsonUrl).pipe(
+    //   // Only take the first `numberOfTickets` tickets
+    //   map(tickets => tickets.slice(0, numberOfTickets))
+    // );
 
-    return this.http.get<Ticket[]>(this.jsonUrl).pipe(
-      // Only take the first `numberOfTickets` tickets
-      map(tickets => tickets.slice(0, numberOfTickets))
+    const ticketsRef = collection(this.firestore, 'tickets');
+    const activeTicketsQuery = query(
+      ticketsRef,
+      orderBy('eventDate', 'asc'),
+      limit(numberOfTickets),
     );
+    return collectionData(activeTicketsQuery, { idField: 'id' }) as Observable<Ticket[]>;
 
     //  const ticketsRef = collection(this.firestore, 'tickets');
     // return collectionData(ticketsRef, { idField: 'id' }).pipe(
@@ -33,7 +50,7 @@ export class TicketServiceService {
       map((response: Ticket) => {
         // Handle the response if needed
         return response;
-      })
+      }),
     );
   }
 
@@ -50,5 +67,26 @@ export class TicketServiceService {
   setTicket(id: string, ticket: Ticket) {
     const ticketRef = doc(this.firestore, 'tickets', id);
     return setDoc(ticketRef, ticket);
+  }
+
+  findTicketBySearch(searchString: string): Observable<Ticket[]> {
+    const ticketsRef = collection(this.firestore, 'tickets');
+    return collectionData(ticketsRef, { idField: 'id' }) as Observable<Ticket[]>;
+  }
+
+  getAllActiveTickets(): Observable<Ticket[]> {
+    const ticketsRef = collection(this.firestore, 'tickets');
+    const activeTicketsQuery = query(ticketsRef, orderBy('eventDate', 'asc'));
+    return collectionData(activeTicketsQuery, { idField: 'id' }) as Observable<Ticket[]>;
+  }
+
+  getTicketsBySearchString(): Observable<Ticket[]> {
+    const ticketsRef = collection(this.firestore, 'tickets');
+    const activeTicketsQuery = query(
+      ticketsRef,
+      where('name', '>=', new Date()),
+      orderBy('eventDate', 'asc'),
+    );
+    return collectionData(activeTicketsQuery, { idField: 'id' }) as Observable<Ticket[]>;
   }
 }

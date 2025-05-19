@@ -1,58 +1,51 @@
 <div class="flex flex-col">
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-10 pb-1 items-center">
-        <div class="text-lg font-bold text-center p-4 mt-10">
-            <div class="text-2xl font-semibold p-3">Buy or sell tickets effortlessly with Reticketed.</div>
-            <app-search-bar [placeholderText]="'Search any ticket..'"
-                [class]="' w-200 pl-5 pr-4 py-3  border border-gray-300 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-black transition'"></app-search-bar>
-
-        </div>
-
-        <div class="hidden md:block">
-            <img src="assets/hero_banner.png" alt="banner" class="h-100 w-auto mx-auto ">
-        </div>
+  <div class="grid grid-cols-1 items-center gap-4 p-10 pb-1 md:grid-cols-2">
+    <div class="mt-10 p-4 text-center text-lg font-bold">
+      <div class="p-3 text-2xl font-semibold">
+        Buy or sell tickets effortlessly with Reticketed.
+      </div>
+      <app-search-bar
+        [placeholderText]="'Search any ticket..'"
+        [class]="'mx-auto mt-2 w-full max-w-2xl'"
+        (searchButtonClicked)="onSearch($event)"
+      ></app-search-bar>
     </div>
 
+    <div class="hidden md:block">
+      <img src="assets/hero_banner.png" alt="banner" class="mx-auto h-100 w-auto" />
+    </div>
+  </div>
 
-    <div class="pl-5 pr-5">
-        <section class="bg-gray-50 py-16">
-            <div class="flex flex-row justify-between">
-                <div class="text-md font-bold pl-5 mb-1">Recently uploaded</div>
-                <!-- <div class="text-sm font-bold pr-5 mb-1">
+  <div class="pr-5 pl-5">
+    <section class="bg-gray-50 py-16">
+      <div class="flex flex-row justify-between">
+        <div class="text-md mb-1 pl-5 font-bold">Recently uploaded</div>
+        <!-- <div class="text-sm font-bold pr-5 mb-1">
             <a href="#" class="shadow-lg">View All</a>
         </div> -->
-            </div>
+      </div>
 
+      <app-recent-tickets></app-recent-tickets>
+    </section>
+  </div>
 
-            <app-recent-tickets></app-recent-tickets>
-        </section>
+  <div class="py-10 pr-5 pl-5">
+    <section class="bg-gray-50 py-10">
+      <div class="flex flex-row justify-between">
+        <div class="text-md mb-1 pl-5 font-bold">Browse by category</div>
+      </div>
 
-    </div>
+      <div class="grid grid-cols-2 gap-4 p-5 md:grid-cols-4">
+        @for (category of categories; track category) {
+          <app-category-card [category]="category"></app-category-card>
+        }
+      </div>
+    </section>
+  </div>
 
-
-     <div class="pl-5 pr-5">
-        <section class="bg-gray-50 py-16">
-            <div class="flex flex-row justify-between">
-                <div class="text-md font-bold pl-5 mb-1">Browse by category</div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5">
-                @for(category of categories; track category){
-                <app-category-card [category]="category"></app-category-card>
-                }
-            
-
-                </div>
-        </section>
-
-    </div>
-
-
-
-    <div class="mb-10">
-        <section class="bg-gray-50 py-16">
-            <app-how-it-works></app-how-it-works>
-        </section>
-
-    </div>
+  <div class="py-10 pr-5 pl-5">
+    <section class="bg-gray-50 py-10">
+      <app-how-it-works></app-how-it-works>
+    </section>
+  </div>
 </div>

@@ -1,0 +1,22 @@
+<div class="flex flex-col justify-between bg-gray-100 p-10">
+  <div>
+    <app-search-bar
+      [placeholderText]="'Search any ticket...'"
+      [class]="'mx-auto mt-2 w-full max-w-sm'"
+      [value]="searchString() || ''"
+      (searchButtonClicked)="onSearch($event)"
+    ></app-search-bar>
+  </div>
+
+  <div class="mt-10 p-4 pl-10 text-left text-lg font-bold">
+    {{ filteredTickets.length }} search result for "{{ searchString() }}"
+  </div>
+
+  <hr class="mt-2 mb-4 border-t border-gray-300" />
+
+  <div class="grid grid-cols-1 items-center gap-4 p-10 pb-20 md:grid-cols-3">
+    @for (ticket of filteredTickets; track ticket.id) {
+      <app-ticket-card [event]="ticket"></app-ticket-card>
+    }
+  </div>
+</div>

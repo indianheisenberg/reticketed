@@ -1,36 +1,41 @@
-<div class="max-w-sm  overflow-hidden shadow-xl rounded-lg">
-    <!-- <img class="w-100 h-50" [src]="event().mediaUrl" alt="no media"> -->
- <!-- <i [class]="eventTypeIcons[event().type]" aria-hidden="true"></i> -->
-    <div class="flex flex-col justify-between p-4 gap-0.5">
-        <div class="flex items-center justify-between">
-            <div class="font-bold text-xl mb-1">{{event().name}}</div>
-            <span
-  class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 hover:bg-blue-200 cursor-pointer transition">
-  <i [class]="eventTypeIcons[event().type]" class="mr-1"></i>
-  {{ event().type }}
-</span>
-        </div>
-        <div >
-           
-            <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>{{ event().location }}
-        </div>
-        <div >
-            <i class="fas fa-calendar-alt mr-1 text-blue-500"></i>
-            {{ event().eventDate | date: 'dd/MM/yy' }} ({{ event().startTime }} - {{ event().endTime }})
-        </div>
-
-        <div >
-        <i class="fas fa-tags mr-1 text-green-600"></i><span class="text-gray-500 line-through">₹{{ event().originalPrice }}</span> ₹{{ event().price }} 
-      </div>
-
-      <div >
-        <i class="fas fa-chair mr-1 text-purple-500"></i> Seats available: {{ event().seatsAvailable }}
-      </div>
-
-      <div>
-        <button class="text-xs shadow-lg mt-4 rounded-full px-2 py-1 bg-black text-white">Get seller contact</button>
-      </div>
-
+<div class="max-w-sm overflow-hidden rounded-lg shadow-xl">
+  <!-- <img class="w-100 h-50" [src]="event().mediaUrl" alt="no media"> -->
+  <!-- <i [class]="eventTypeIcons[event().type]" aria-hidden="true"></i> -->
+  <div class="flex flex-col justify-between gap-0.5 p-4">
+    <div class="flex items-center justify-between">
+      <div class="mb-1 text-xl font-bold">{{ event().name }}</div>
+      <span
+        class="inline-flex cursor-pointer items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 transition hover:bg-blue-200"
+      >
+        <i [class]="eventTypeIcons[event().type]" class="mr-1"></i>
+        {{ event().type }}
+      </span>
+    </div>
+    <div><i class="fas fa-map-marker-alt mr-2 text-red-500"></i>{{ event().location }}</div>
+    <div>
+      <i class="fas fa-calendar-alt mr-1 text-blue-500"></i>
+      {{ event().eventDate | date: 'dd/MM/yy' }} ({{ event().startTime }} - {{ event().endTime }})
     </div>
 
+    <div>
+      <i class="fas fa-tags mr-1 text-green-600"></i
+      ><span class="text-gray-500 line-through">₹{{ event().originalPrice }}</span> ₹{{
+        event().price
+      }}
+    </div>
+
+    <div>
+      <i class="fas fa-chair mr-1 text-purple-500"></i> Seats available:
+      {{ event().seatsAvailable }}
+    </div>
+
+    <div>
+      <button
+        class="mt-4 rounded-full bg-black px-2 py-1 text-xs text-white shadow-lg"
+        (click)="onGetSellerContact()"
+      >
+        Get seller contact
+      </button>
+    </div>
+  </div>
 </div>

@@ -2,7 +2,9 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './components/common/login/login.component';
 import { FindTicketComponent } from './components/find-ticket/find-ticket.component';
 import { HomeComponent } from './components/home/home.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { SellTicketComponent } from './components/sell-ticket/sell-ticket.component';
+import { TermsOfServiceComponent } from './components/terms-of-service/terms-of-service.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { authGuard } from './guards/auth.guard';
 
@@ -14,4 +16,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'find-ticket', component: FindTicketComponent },
   { path: 'profile', component: UserProfileComponent, canActivate: [authGuard] },
+  { path: 'terms-of-service', component: TermsOfServiceComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
 ];

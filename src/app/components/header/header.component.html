@@ -1,4 +1,6 @@
-<nav class="flex w-full items-center justify-around bg-white px-6 py-4 shadow-md">
+<nav
+  class="flex w-full items-center justify-between bg-white px-6 py-4 shadow-md md:justify-around"
+>
   <!-- Logo -->
   <div class="cursor-pointer text-2xl font-bold text-gray-800">
     <img
@@ -20,7 +22,7 @@
       </button>
     }
 
-    @if (authLoaded) {
+    <!-- @if (authLoaded) {
       @if (!isLoggedIn()) {
         <app-primary-button
           [label]="'Login'"
@@ -28,15 +30,15 @@
           (click)="onLoginClick()"
         />
       } @else {
-        <!-- Avatar + dropdown -->
+  
 
         <app-avatar [user]="user()!"></app-avatar>
       }
-    }
+    } -->
   </div>
 
   <!-- Mobile Right Side -->
-  <div class="md:hidden">
+  <div class="hidden">
     @if (authLoaded) {
       @if (!isLoggedIn()) {
         <app-primary-button
@@ -72,9 +74,12 @@
 </nav>
 
 <!-- Mobile Menu -->
-<div *ngIf="mobileMenuOpen" class="flex flex-col items-center px-6 pb-4 md:hidden">
+<div *ngIf="mobileMenuOpen" class="flex flex-col items-center bg-gray-200 px-6 pb-4 md:hidden">
   @for (link of navigationLinks(); track link.id) {
-    <a [routerLink]="[link.path]" class="block py-2 text-gray-700 hover:text-lg hover:text-black">
+    <a
+      [routerLink]="[link.path]"
+      class=":text-lg mt-2 block px-5 py-2 font-bold text-gray-700 hover:text-black"
+    >
       {{ link.name }}
     </a>
   }

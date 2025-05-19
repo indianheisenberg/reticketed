@@ -7,7 +7,7 @@ import { AuthService } from '../../../services/auth.service';
   selector: 'app-login',
   imports: [CommonModule],
   template: `
-    <div class="flex min-h-screen items-center justify-center bg-gray-100">
+    <div class="flex items-center justify-center bg-gray-100 p-30">
       <div class="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-lg">
         @if (!isLoggedIn()) {
           <h1 class="mb-4 text-2xl font-semibold">Sign in</h1>

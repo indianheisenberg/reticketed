@@ -14,7 +14,7 @@
     @for (link of navigationLinks(); track link.id) {
       <button
         [routerLink]="[link.path]"
-        class="inline-flex items-center gap-x-2 rounded-lg border border-black bg-white px-3 py-2 text-sm font-medium text-black hover:bg-gray-700 hover:text-white hover:shadow-lg focus:bg-blue-700 focus:outline-hidden disabled:pointer-events-none disabled:opacity-50"
+        class="inline-flex items-center gap-x-2 rounded-lg border border-black bg-white px-3 py-2 text-sm font-medium text-black hover:bg-gray-700 hover:text-white hover:shadow-lg focus:outline-hidden disabled:pointer-events-none disabled:opacity-50"
       >
         {{ link.name }}
       </button>

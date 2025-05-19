@@ -1,4 +1,5 @@
 export enum EventType {
+  Movie = 'Movie',
   Concert = 'Concert',
   ComedyShow = 'Comedy Show',
   Cricket = 'Cricket',
@@ -6,6 +7,5 @@ export enum EventType {
   FoodFestival = 'Food Festival',
   Workshop = 'Workshop',
   Webinar = 'Webinar',
-  Other = 'Other',
-  Movie = 'Movie',
+  Other = 'Others',
 }

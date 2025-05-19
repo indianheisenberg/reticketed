@@ -1,6 +1,6 @@
 <nav class="flex w-full items-center justify-around bg-white px-6 py-4 shadow-md">
   <!-- Logo -->
-  <div class="text-2xl font-bold text-gray-800">
+  <div class="cursor-pointer text-2xl font-bold text-gray-800">
     <img
       src="assets/reticketed_logo_cropped.png"
       alt="Reticketed"
@@ -9,38 +9,44 @@
     />
   </div>
 
-  <!-- Desktop Nav -->
+  <!-- Desktop Navigation -->
   <div class="hidden items-center space-x-6 md:flex">
     @for (link of navigationLinks(); track link.id) {
-      <a
+      <button
         [routerLink]="[link.path]"
-        class="text-gray-600 transition hover:text-lg hover:text-black"
-        >{{ link.name }}</a
+        class="inline-flex items-center gap-x-2 rounded-lg border border-black bg-white px-3 py-2 text-sm font-medium text-black hover:bg-gray-700 hover:text-white hover:shadow-lg focus:bg-blue-700 focus:outline-hidden disabled:pointer-events-none disabled:opacity-50"
       >
+        {{ link.name }}
+      </button>
     }
 
-    @if (!isLoggedIn()) {
-      <app-primary-button
-        [label]="'Login'"
-        [class]="'rounded-xl bg-black px-4 py-2 text-white transition hover:shadow-lg'"
-        (click)="onLoginClick()"
-      >
-      </app-primary-button>
-    } @else {
-      <!-- add avatar here ang settings-->
+    @if (authLoaded) {
+      @if (!isLoggedIn()) {
+        <app-primary-button
+          [label]="'Login'"
+          [class]="'rounded-xl bg-black px-4 py-2 text-white transition hover:shadow-lg'"
+          (click)="onLoginClick()"
+        />
+      } @else {
+        <!-- Avatar + dropdown -->
+
+        <app-avatar [user]="user()!"></app-avatar>
+      }
     }
   </div>
 
+  <!-- Mobile Right Side -->
   <div class="md:hidden">
-    @if (!isLoggedIn()) {
-      <app-primary-button
-        [label]="'Login'"
-        [class]="'rounded-xl bg-black px-4 py-2 text-white transition hover:shadow-lg'"
-        (click)="onLoginClick()"
-      >
-      </app-primary-button>
-    } @else {
-      <!-- add avatar here ang settings-->
+    @if (authLoaded) {
+      @if (!isLoggedIn()) {
+        <app-primary-button
+          [label]="'Login'"
+          [class]="'rounded-xl bg-black px-4 py-2 text-white transition hover:shadow-lg'"
+          (click)="onLoginClick()"
+        />
+      } @else {
+        <app-avatar [user]="user()!"></app-avatar>
+      }
     }
   </div>
 
@@ -68,8 +74,8 @@
 <!-- Mobile Menu -->
 <div *ngIf="mobileMenuOpen" class="flex flex-col items-center px-6 pb-4 md:hidden">
   @for (link of navigationLinks(); track link.id) {
-    <a [routerLink]="[link.path]" class="block py-2 text-gray-700 hover:text-lg hover:text-black">{{
-      link.name
-    }}</a>
+    <a [routerLink]="[link.path]" class="block py-2 text-gray-700 hover:text-lg hover:text-black">
+      {{ link.name }}
+    </a>
   }
 </div>

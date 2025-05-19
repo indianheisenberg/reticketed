@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Ticket } from '../../models/ticket.model';
 import { TicketServiceService } from '../../services/ticket-service.service';
 import { SearchBarComponent } from '../common/search-bar/search-bar.component';
@@ -15,29 +15,67 @@ export class FindTicketComponent implements OnInit {
   searchString = signal('mission');
   ticketService = inject(TicketServiceService);
   filteredTickets: Ticket[] = [];
+  categoryString = signal('');
+  router = inject(Router);
+  private isFirstLoad = true;
+  route = inject(ActivatedRoute);
 
-  constructor(private route: ActivatedRoute) {
+  // constructor(private route: ActivatedRoute) {
+  //   this.route.queryParamMap.subscribe(params => {
+  //     const search = params.get('q') ?? '';
+  //     const category = params.get('c') ?? '';
+  //     this.searchString.set(search);
+  //     this.categoryString.set(category);
+  //     this.loadTickets(search, category);
+  //     setTimeout(() => {
+  //       this.router.navigate([], {
+  //         queryParams: {},
+  //         replaceUrl: true,
+  //         queryParamsHandling: '',
+  //       });
+  //     });
+  //   });
+  // }
+
+  ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
-      const search = params.get('q') ?? '';
-      this.searchString.set(search);
-      this.loadTickets(search);
+      if (this.isFirstLoad) {
+        const search = params.get('q') ?? '';
+        const category = params.get('c') ?? '';
+
+        this.searchString.set(search);
+        this.categoryString.set(category);
+
+        this.loadTickets(search, category);
+
+        this.isFirstLoad = false;
+
+        // Remove query params only after first load
+        setTimeout(() => {
+          this.router.navigate([], {
+            queryParams: {},
+            replaceUrl: true,
+            queryParamsHandling: '',
+          });
+        });
+      } else {
+        // Do nothing on subsequent param clears
+      }
     });
   }
 
-  ngOnInit(): void {
-    this.loadTickets();
-  }
-
-  loadTickets(search = '') {
+  loadTickets(search = '', category = '') {
     this.ticketService.getAllActiveTickets().subscribe((tickets: Ticket[]) => {
-      this.filteredTickets = tickets.filter(ticket =>
-        ticket.name.toLowerCase().includes(search.toLowerCase()),
+      this.filteredTickets = tickets.filter(
+        ticket =>
+          ticket.name.toLowerCase().includes(search.toLowerCase()) &&
+          ticket.type.toLowerCase().includes(category.toLowerCase()),
       );
     });
   }
 
   onSearch(value: string) {
     this.searchString.set(value);
-    this.loadTickets(value);
+    this.loadTickets(value, this.categoryString());
   }
 }

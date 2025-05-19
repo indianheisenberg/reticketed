@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { EventType } from '../../enums/event-type.enum';
+import { AuthService } from '../../services/auth.service';
 import { TicketServiceService } from '../../services/ticket-service.service';
 
 @Component({
@@ -19,6 +20,8 @@ export class SellTicketComponent {
   eventTypes = Object.values(EventType);
   router = inject(Router);
   private snackBar = inject(MatSnackBar);
+  authService = inject(AuthService);
+  user = this.authService.user();
 
   ticketForm: FormGroup = this.fb.group({
     id: [Date.now()], // auto-generate
@@ -46,6 +49,7 @@ export class SellTicketComponent {
     performerName: [''],
     performerBio: [''],
     postedDate: [new Date()],
+    postedBy: [this.user?.uid ?? null],
   });
 
   submit() {

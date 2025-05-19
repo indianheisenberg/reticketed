@@ -3,6 +3,7 @@ import { LoginComponent } from './components/common/login/login.component';
 import { FindTicketComponent } from './components/find-ticket/find-ticket.component';
 import { HomeComponent } from './components/home/home.component';
 import { SellTicketComponent } from './components/sell-ticket/sell-ticket.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -12,4 +13,5 @@ export const routes: Routes = [
   { path: 'sell-ticket', component: SellTicketComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'find-ticket', component: FindTicketComponent },
+  { path: 'profile', component: UserProfileComponent, canActivate: [authGuard] },
 ];

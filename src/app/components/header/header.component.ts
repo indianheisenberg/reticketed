@@ -1,12 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { AvatarComponent } from '../common/avatar/avatar.component';
 import { PrimaryButtonComponent } from '../common/primary-button/primary-button.component';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule, CommonModule, PrimaryButtonComponent],
+  imports: [
+    RouterModule,
+    CommonModule,
+    PrimaryButtonComponent,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    AvatarComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -38,5 +50,13 @@ export class HeaderComponent {
   onLoginClick() {
     // Logic to handle the login button click
     this.router.navigateByUrl('login');
+  }
+
+  get authLoaded() {
+    return this.authService.authLoaded();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

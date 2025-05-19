@@ -7,7 +7,6 @@ export interface Ticket {
   description?: string; // Description of the event
   eventDate: Date; // Date of the event
   location: string; // Location of the event (e.g., venue name)
-
   startTime?: string; // Start time of the event (e.g., "2023-10-01T20:00:00Z")
   endTime?: string; // End time of the event (e.g., "2023-10-01T23:00:00Z")
   duration?: number; // Duration of the event in minutes
@@ -27,4 +26,6 @@ export interface Ticket {
   performerName?: string; // Name of the performer (e.g., artist, band)
   performerBio?: string; // Bio of the performer (optional)
   postedDate: Date; // When the ticket was posted for sale
+  postedBy: string; // User ID of the person who posted the ticket
+  contactedBy?: string[]; // User IDs of the person who contacted the ticket holder
 }

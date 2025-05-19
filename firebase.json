@@ -1,16 +1,10 @@
 {
   "firestore": {
-    "database": "(default)",
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+    "database": "(default)"
   },
   "hosting": {
     "public": "dist/reticketed/browser",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",

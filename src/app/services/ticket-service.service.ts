@@ -89,4 +89,24 @@ export class TicketServiceService {
     );
     return collectionData(activeTicketsQuery, { idField: 'id' }) as Observable<Ticket[]>;
   }
+
+  getTicketsByUserId(userId: string): Observable<Ticket[]> {
+    const ticketsRef = collection(this.firestore, 'tickets');
+    const activeTicketsQuery = query(
+      ticketsRef,
+      where('postedBy', '==', userId),
+      orderBy('eventDate', 'asc'),
+    );
+    return collectionData(activeTicketsQuery, { idField: 'id' }) as Observable<Ticket[]>;
+  }
+
+  getTicketsByContactedUserId(userId: string): Observable<Ticket[]> {
+    const ticketsRef = collection(this.firestore, 'tickets');
+    const activeTicketsQuery = query(
+      ticketsRef,
+      where('contactedBy', 'array-contains', userId),
+      orderBy('eventDate', 'asc'),
+    );
+    return collectionData(activeTicketsQuery, { idField: 'id' }) as Observable<Ticket[]>;
+  }
 }

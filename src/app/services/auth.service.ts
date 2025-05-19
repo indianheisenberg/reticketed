@@ -7,6 +7,7 @@ import {
   signOut,
   User,
 } from '@angular/fire/auth';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +15,17 @@ import {
 export class AuthService {
   private auth = inject(Auth);
   user = signal<User | null>(null);
+  authLoaded = signal(false);
+
+  private userSubject = new BehaviorSubject<User | null | undefined>(undefined); // undefined means "still loading"
+  userSignal$ = this.userSubject.asObservable();
 
   constructor() {
-    onAuthStateChanged(this.auth, user => this.user.set(user));
+    onAuthStateChanged(this.auth, user => {
+      this.user.set(user);
+      this.userSubject.next(user); // emit user or null
+      this.authLoaded.set(true);
+    });
   }
 
   async googleSignIn() {

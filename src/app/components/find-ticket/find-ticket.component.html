@@ -9,7 +9,17 @@
   </div>
 
   <div class="mt-10 p-4 pl-10 text-left text-lg font-bold">
-    {{ filteredTickets.length }} search result for "{{ searchString() }}"
+    @if (filteredTickets.length > 0) {
+      @if (searchString()) {
+        <div>Found {{ filteredTickets.length }} tickets for "{{ searchString() }}"</div>
+      } @else if (categoryString()) {
+        <div>Found {{ filteredTickets.length }} tickets for "{{ categoryString() }}"</div>
+      } @else {
+        <div>Found {{ filteredTickets.length }} tickets</div>
+      }
+    } @else {
+      <div>No tickets found for "{{ searchString() || categoryString() }}"</div>
+    }
   </div>
 
   <hr class="mt-2 mb-4 border-t border-gray-300" />

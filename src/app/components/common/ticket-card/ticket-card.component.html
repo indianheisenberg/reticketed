@@ -123,21 +123,26 @@
         </ng-container>
 
         <ng-template #guestView>
-          <button
-            (click)="onGetSellerContact(null)"
-            type="button"
-            class="mt-3 w-30 cursor-pointer rounded-lg bg-black py-1 text-center text-xs font-medium text-white hover:bg-gray-700"
-          >
-            <i class="fas fa-envelope mr-1 text-xs text-white"></i> Contact Seller
-          </button>
-          <div>
-            <!-- Show More Button -->
-            <button
-              (click)="showTicketDetails()"
-              class="mt-2 flex items-center justify-center rounded-lg bg-gray-100 py-1.5 text-center text-xs font-medium text-gray-700 transition hover:bg-gray-200"
-            >
-              <i class="fas fa-info-circle mr-1"></i> Show More Details
-            </button>
+          <div class="flex items-center justify-between">
+            <div>
+              <button
+                (click)="onGetSellerContact(null)"
+                type="button"
+                class="mt-3 w-30 cursor-pointer rounded-lg bg-black py-1 text-center text-xs font-medium text-white hover:bg-gray-700"
+              >
+                <i class="fas fa-envelope mr-1 text-xs text-white"></i> Contact Seller
+              </button>
+            </div>
+
+            <div>
+              <!-- Show More Button -->
+              <button
+                (click)="showTicketDetails()"
+                class="mt-2 flex items-center justify-center rounded-lg bg-gray-100 py-1.5 text-center text-xs font-medium text-gray-700 transition hover:bg-gray-200"
+              >
+                <i class="fas fa-info-circle mr-1"></i> View More
+              </button>
+            </div>
           </div>
         </ng-template>
       </div>

@@ -1,6 +1,6 @@
-<div [class]="class">
+<div [class]="class" class="w-full max-w-full overflow-hidden">
   <form
-    class="flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 shadow-sm"
+    class="flex w-full max-w-full items-center rounded-full border border-gray-300 bg-white px-4 py-2 shadow-sm"
     (submit)="onSearch(); $event.preventDefault()"
   >
     <i class="fas fa-search mr-2 text-gray-400"></i>
@@ -10,7 +10,7 @@
       [placeholder]="placeholderText"
       [value]="value"
       (input)="onInputChange($event)"
-      class="flex-1 bg-transparent text-gray-700 placeholder-gray-400 outline-none"
+      class="min-w-0 flex-1 bg-transparent text-gray-700 placeholder-gray-400 outline-none"
     />
 
     <button type="submit" class="rounded-full bg-white px-3 py-1 text-2xl text-black transition">

@@ -55,6 +55,9 @@ export class SellTicketComponent {
   submit() {
     if (this.ticketForm.valid) {
       const ticket = this.ticketForm.value;
+      if (!ticket.postedBy) {
+        ticket.postedBy = this.user?.uid;
+      }
       this.ticketService
         .addTicket(ticket)
         .then(() => {

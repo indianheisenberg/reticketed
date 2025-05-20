@@ -4,6 +4,7 @@ import {
   addDoc,
   collection,
   collectionData,
+  deleteDoc,
   doc,
   Firestore,
   limit,
@@ -20,7 +21,7 @@ import { Ticket } from '../models/ticket.model';
 })
 export class TicketServiceService {
   private http = inject(HttpClient);
-  private jsonUrl = 'assets/events.json';
+  private jsonUrl = 'assets/dummy_tickets_full.json';
 
   private firestore = inject(Firestore); // Modern inject usage
 
@@ -33,6 +34,7 @@ export class TicketServiceService {
     const ticketsRef = collection(this.firestore, 'tickets');
     const activeTicketsQuery = query(
       ticketsRef,
+      where('status', '==', 'active'),
       orderBy('eventDate', 'asc'),
       limit(numberOfTickets),
     );
@@ -76,7 +78,11 @@ export class TicketServiceService {
 
   getAllActiveTickets(): Observable<Ticket[]> {
     const ticketsRef = collection(this.firestore, 'tickets');
-    const activeTicketsQuery = query(ticketsRef, orderBy('eventDate', 'asc'));
+    const activeTicketsQuery = query(
+      ticketsRef,
+      where('status', '==', 'active'),
+      orderBy('eventDate', 'asc'),
+    );
     return collectionData(activeTicketsQuery, { idField: 'id' }) as Observable<Ticket[]>;
   }
 
@@ -108,5 +114,42 @@ export class TicketServiceService {
       orderBy('eventDate', 'asc'),
     );
     return collectionData(activeTicketsQuery, { idField: 'id' }) as Observable<Ticket[]>;
+  }
+
+  deleteTicket(id: string) {
+    const ticketRef = doc(this.firestore, 'tickets', id);
+    return deleteDoc(ticketRef);
+  }
+
+  markAsSold(id: string) {
+    const ticketRef = doc(this.firestore, 'tickets', id);
+    return setDoc(ticketRef, { status: 'sold' }, { merge: true });
+  }
+
+  updateTicket(id: string, ticket: Ticket) {
+    const ticketRef = doc(this.firestore, 'tickets', id);
+    return setDoc(ticketRef, ticket, { merge: true });
+  }
+
+  loadData(): void {
+    this.http.get<Ticket[]>(this.jsonUrl).subscribe({
+      next: (tickets: Ticket[]) => {
+        this.uploadTicketsSequentially(tickets);
+      },
+      error: err => {
+        console.error('Failed to load data:', err);
+      },
+    });
+  }
+
+  uploadTicketsSequentially(tickets: Ticket[], delayMs = 200): void {
+    tickets
+      .reduce((promise, ticket, index) => {
+        return promise.then(() => {
+          this.addTicket(ticket);
+          return new Promise(resolve => setTimeout(resolve, delayMs));
+        });
+      }, Promise.resolve())
+      .then(() => {});
   }
 }

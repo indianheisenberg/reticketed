@@ -59,4 +59,10 @@ export class HeaderComponent {
   logout() {
     this.authService.logout();
   }
+
+  navigateToMobileMenuLink(path: string) {
+    this.router.navigateByUrl(path).then(() => {
+      this.mobileMenuOpen = false;
+    });
+  }
 }

@@ -1,5 +1,11 @@
 <div class="grid grid-cols-1 gap-4 p-5 md:grid-cols-3 lg:grid-cols-4">
   @for (ticket of events | async; track ticket.id) {
-    <app-ticket-card [event]="ticket"></app-ticket-card>
+    <app-ticket-card
+      [event]="ticket"
+      [showDeleteButton]="false"
+      [showUpdateButton]="false"
+      [showMarkAsSoldButton]="false"
+      [showPostedBy]="true"
+    ></app-ticket-card>
   }
 </div>

@@ -1,0 +1,31 @@
+<!-- pagination.component.html -->
+<div class="mt-4 flex justify-center space-x-1">
+  <button
+    class="rounded-l bg-gray-200 px-3 py-1 text-sm hover:bg-gray-300"
+    [disabled]="currentPage === 1"
+    (click)="previousPage()"
+  >
+    Prev
+  </button>
+
+  <ng-container *ngFor="let page of totalPagesArray">
+    <button
+      class="px-3 py-1 text-sm"
+      [ngClass]="{
+        'bg-blue-600 text-white': page === currentPage,
+        'bg-gray-200 hover:bg-gray-300': page !== currentPage,
+      }"
+      (click)="goToPage(page)"
+    >
+      {{ page }}
+    </button>
+  </ng-container>
+
+  <button
+    class="rounded-r bg-gray-200 px-3 py-1 text-sm hover:bg-gray-300"
+    [disabled]="currentPage === totalPages"
+    (click)="nextPage()"
+  >
+    Next
+  </button>
+</div>

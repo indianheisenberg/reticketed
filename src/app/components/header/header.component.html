@@ -35,6 +35,12 @@
         <app-avatar [user]="user()!"></app-avatar>
       }
     } -->
+
+    @if (authLoaded) {
+      @if (isLoggedIn()) {
+        <app-avatar [user]="user()!"></app-avatar>
+      }
+    }
   </div>
 
   <!-- Mobile Right Side -->
@@ -77,10 +83,15 @@
 <div *ngIf="mobileMenuOpen" class="flex flex-col items-center bg-gray-200 px-6 pb-4 md:hidden">
   @for (link of navigationLinks(); track link.id) {
     <a
-      [routerLink]="[link.path]"
+      (click)="[navigateToMobileMenuLink(link.path)]"
       class=":text-lg mt-2 block px-5 py-2 font-bold text-gray-700 hover:text-black"
     >
       {{ link.name }}
     </a>
+  }
+  @if (authLoaded) {
+    @if (isLoggedIn()) {
+      <app-avatar [user]="user()!"></app-avatar>
+    }
   }
 </div>

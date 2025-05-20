@@ -22,7 +22,7 @@ export interface Ticket {
   validTo?: Date; // When the ticket expires (e.g., end of the event)
   isUsed?: boolean; // Has the ticket been used (scanned)?
   qrCodeUrl?: string; // URL to the ticket's QR code image
-  status?: 'active' | 'used' | 'expired'; // Status of the ticket
+  status?: 'active' | 'sold' | 'expired' | 'used'; // Status of the ticket
   performerName?: string; // Name of the performer (e.g., artist, band)
   performerBio?: string; // Bio of the performer (optional)
   postedDate: Date; // When the ticket was posted for sale

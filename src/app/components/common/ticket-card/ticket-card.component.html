@@ -27,7 +27,7 @@
     </div>
 
     <ng-container *ngIf="user$ | async as user; else guestView">
-      <div *ngIf="!postedByUser(user) && !contactedByUser(user)">
+      <div *ngIf="!postedByUser(user) && !contactedByUser(user) && showContactSellerButton">
         <button
           (click)="onGetSellerContact(user)"
           type="button"
@@ -36,13 +36,47 @@
           <i class="fas fa-envelope mr-1 text-xs text-white"></i> Contact Seller
         </button>
       </div>
-      <div *ngIf="!postedByUser(user) && contactedByUser(user)">
+      <div *ngIf="!postedByUser(user) && contactedByUser(user) && showContactedBy">
         <p class="mt-2 text-xs text-black">
           <i class="fas fa-info-circle mr-1"></i>You already contacted the seller. Check your email.
         </p>
       </div>
-      <div *ngIf="postedByUser(user)">
+      <div *ngIf="postedByUser(user) && showPostedBy">
         <p class="mt-2 text-xs text-black"><i class="fas fa-info-circle mr-1"></i>Posted by you.</p>
+
+        <ng-container *ngIf="event.status != 'sold'; else guestView">
+          <div class="flex items-center justify-between">
+            <button
+              *ngIf="showDeleteButton"
+              (click)="onDeleteTicket()"
+              type="button"
+              class="mt-3 cursor-pointer rounded-lg bg-black px-2 py-1 text-center text-[8px] font-medium text-white hover:bg-red-700"
+            >
+              <i class="fas fa-trash mr-1 text-[10px] text-white"></i> Delete Ticket
+            </button>
+            <button
+              *ngIf="showMarkAsSoldButton"
+              (click)="onMarkAsSold()"
+              type="button"
+              class="mt-3 cursor-pointer rounded-lg bg-black px-2 py-1 text-center text-[8px] font-medium text-white hover:bg-blue-700"
+            >
+              <i class="fas fa-check mr-1 text-[10px] text-white"></i> Mark as Sold
+            </button>
+            <button
+              *ngIf="showUpdateButton"
+              (click)="onUpdateTicket()"
+              type="button"
+              class="mt-3 cursor-pointer rounded-lg bg-black px-2 py-1 text-center text-[8px] font-medium text-white hover:bg-blue-700"
+            >
+              <i class="fas fa-edit mr-1 text-[10px] text-white"></i> Update Ticket
+            </button>
+          </div>
+        </ng-container>
+        <ng-template #guestView *ngIf="showTicketIsSold">
+          <p class="mt-2 text-xs text-black">
+            <i class="fas fa-info-circle mr-1"></i>Ticket is sold.
+          </p>
+        </ng-template>
       </div>
     </ng-container>
 

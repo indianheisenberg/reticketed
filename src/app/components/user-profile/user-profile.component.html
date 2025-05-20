@@ -1,5 +1,6 @@
 <div class="flex min-h-screen items-center justify-center bg-gray-100">
   <div class="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-md">
+    <!-- <button (click)="loadData()">loadData</button> -->
     <ng-container *ngIf="user; else notLoggedIn">
       <img
         [src]="user?.photoURL || ''"

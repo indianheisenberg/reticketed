@@ -43,4 +43,8 @@ export class UserProfileComponent implements OnInit {
   trackById(index: number, item: Ticket): string {
     return String(item.id);
   }
+
+  loadData() {
+    this.ticketService.loadData();
+  }
 }

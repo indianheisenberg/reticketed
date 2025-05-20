@@ -19,6 +19,13 @@ import { TicketServiceService } from '../../../services/ticket-service.service';
 })
 export class TicketCardComponent {
   @Input() event!: Ticket;
+  @Input() showContactSellerButton = true;
+  @Input() showDeleteButton = true;
+  @Input() showMarkAsSoldButton = true;
+  @Input() showUpdateButton = true;
+  @Input() showPostedBy = true;
+  @Input() showContactedBy = true;
+  @Input() showTicketIsSold = true;
 
   eventTypeIcons = EventTypeIcons;
   user$!: Observable<any>; // will be initialized in constructor
@@ -71,5 +78,23 @@ export class TicketCardComponent {
 
   contactedByUser(user: any): boolean {
     return this.event.contactedBy?.includes(user?.uid) ?? false;
+  }
+
+  onDeleteTicket() {
+    this.ticketService.deleteTicket(String(this.event.id)).then(() => {
+      this.snackBar.open('Ticket deleted successfully', 'Close', { duration: 3000 });
+    });
+  }
+
+  onMarkAsSold() {
+    this.ticketService.markAsSold(String(this.event.id)).then(() => {
+      this.snackBar.open('Ticket marked as sold successfully', 'Close', { duration: 3000 });
+    });
+  }
+
+  onUpdateTicket() {
+    this.ticketService.updateTicket(String(this.event.id), this.event).then(() => {
+      this.snackBar.open('Ticket updated successfully', 'Close', { duration: 3000 });
+    });
   }
 }

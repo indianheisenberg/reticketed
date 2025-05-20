@@ -19,9 +19,11 @@ export interface GenericDialogData {
   standalone: true,
   imports: [CommonModule, MatDialogModule],
   template: `
-    <div class="mx-auto w-full overflow-hidden rounded-lg bg-white shadow-xl">
+    <div
+      class="fixed top-1/2 left-1/2 z-50 flex max-h-[90vh] w-full max-w-lg -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-lg bg-white shadow-xl"
+    >
       <!-- Dialog Header -->
-      <div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
+      <div class="flex-shrink-0 border-b border-gray-200 bg-gray-50 px-6 py-4">
         <div class="flex items-center justify-between">
           <h3 class="text-lg font-medium text-gray-900">{{ data.title }}</h3>
           <button
@@ -41,12 +43,10 @@ export interface GenericDialogData {
         </div>
       </div>
 
-      <!-- Dialog Content -->
-      <div class="p-6">
-        <!-- Using content property -->
+      <!-- Dialog Content (Scrollable) -->
+      <div class="flex-1 overflow-y-auto px-6 py-4">
         <div *ngIf="data.content && !data.template">{{ data.content }}</div>
 
-        <!-- Using template -->
         <ng-container *ngIf="data.template">
           <ng-container
             *ngTemplateOutlet="data.template; context: data.templateContext"
@@ -57,7 +57,7 @@ export interface GenericDialogData {
       <!-- Dialog Actions -->
       <div
         *ngIf="data.actions && data.actions.length > 0"
-        class="flex justify-end space-x-3 border-t border-gray-200 bg-gray-50 px-6 py-4"
+        class="flex flex-shrink-0 justify-end space-x-3 border-t border-gray-200 bg-gray-50 px-6 py-4"
       >
         <button
           *ngFor="let action of data.actions"
@@ -66,7 +66,7 @@ export interface GenericDialogData {
           [ngClass]="{
             'bg-blue-600 text-white hover:bg-blue-700': action.color === 'primary',
             'bg-gray-200 text-gray-800 hover:bg-gray-300':
-              action.color === 'secondary' || !action.color,
+              !action.color || action.color === 'secondary',
             'bg-red-600 text-white hover:bg-red-700': action.color === 'danger',
           }"
         >

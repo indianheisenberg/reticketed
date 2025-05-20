@@ -1,11 +1,15 @@
 <div class="group relative">
-  <button mat-button [matMenuTriggerFor]="userMenu" class="min-w-0 p-0">
-    <img
-      [src]="user.photoURL || 'assets/anonymous_user.jpg'"
-      alt="User Avatar"
-      class="h-9 w-9 rounded-full object-cover"
-    />
-  </button>
+  <div class="flex flex-col items-center text-xs">
+    <div>
+      <button mat-button [matMenuTriggerFor]="userMenu" class="min-w-0 p-0">
+        <img
+          [src]="user.photoURL || 'assets/anonymous_user.jpg'"
+          alt="User Avatar"
+          class="h-9 w-9 rounded-full object-cover shadow-md"
+        />
+      </button>
+    </div>
+  </div>
 
   <mat-menu #userMenu="matMenu" class="mt-2" xPosition="before">
     <button mat-menu-item [routerLink]="'/profile'">

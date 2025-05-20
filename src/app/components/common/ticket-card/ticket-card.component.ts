@@ -1,14 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EventTypeIcons } from '../../../enums/event-type-icons';
+import { EventType } from '../../../enums/event-type.enum';
 import { Ticket } from '../../../models/ticket.model';
 import { AuthService } from '../../../services/auth.service';
 import { EmailService } from '../../../services/email.service';
 import { TicketServiceService } from '../../../services/ticket-service.service';
+import { GenericDialogComponent } from '../generic-dialog/generic-dialog.component';
 
 @Component({
   selector: 'app-ticket-card',
@@ -29,6 +32,7 @@ export class TicketCardComponent {
 
   eventTypeIcons = EventTypeIcons;
   user$!: Observable<any>; // will be initialized in constructor
+  @ViewChild('ticketDetailsTemplate') ticketDetailsTemplate!: TemplateRef<{ event: Ticket }>;
 
   showMore = true;
 
@@ -38,6 +42,7 @@ export class TicketCardComponent {
     private emailService: EmailService,
     private snackBar: MatSnackBar,
     private ticketService: TicketServiceService,
+    private dialog: MatDialog,
   ) {
     this.user$ = toObservable(this.authService.user);
   }
@@ -96,5 +101,28 @@ export class TicketCardComponent {
     this.ticketService.updateTicket(String(this.event.id), this.event).then(() => {
       this.snackBar.open('Ticket updated successfully', 'Close', { duration: 3000 });
     });
+  }
+
+  showTicketDetails() {
+    this.dialog.open(GenericDialogComponent, {
+      width: '550px',
+      panelClass: 'custom-dialog-container',
+      data: {
+        title: this.event.name,
+        template: this.ticketDetailsTemplate,
+        templateContext: { event: this.event },
+        actions: [{ label: 'Close', action: 'close', color: 'secondary' }],
+      },
+    });
+  }
+
+  isValidEventType(type: any): type is EventType {
+    return Object.values(EventType).includes(type as EventType);
+  }
+
+  getEventTypeIcon(type: any): string {
+    return this.isValidEventType(type)
+      ? this.eventTypeIcons[type]
+      : this.eventTypeIcons[EventType.Other];
   }
 }

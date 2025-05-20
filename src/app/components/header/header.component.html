@@ -91,7 +91,10 @@
   }
   @if (authLoaded) {
     @if (isLoggedIn()) {
-      <app-avatar [user]="user()!"></app-avatar>
+      <div class="mt-3">
+        <app-avatar [user]="user()!"></app-avatar>
+      </div>
+      <p>My Profile</p>
     }
   }
 </div>

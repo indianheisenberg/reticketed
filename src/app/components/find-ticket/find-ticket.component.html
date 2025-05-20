@@ -26,7 +26,13 @@
 
   <div class="grid grid-cols-1 items-center gap-4 p-10 pb-20 md:grid-cols-3">
     @for (ticket of paginatedTickets; track ticket.id) {
-      <app-ticket-card [event]="ticket"></app-ticket-card>
+      <app-ticket-card
+        [event]="ticket"
+        [showDeleteButton]="false"
+        [showUpdateButton]="false"
+        [showMarkAsSoldButton]="false"
+        [showPostedBy]="true"
+      ></app-ticket-card>
     }
   </div>
 
